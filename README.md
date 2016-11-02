@@ -101,17 +101,17 @@ coldbrew status
 
 It gives you much more details about your application and its related AWS resources.
 
-_*Again, it will take several minutes until all AWS resources get fully provisioned and become active (especially if you enabled load balancer). But, the next deploys will be much faster, typically within a minute._
+_*Again, it will take several minutes until all AWS resources get fully provisioned and become active. But, the next deploys will be much faster, typically within a minute._
 
 #### Deploying Again
 
-After the first deploy, whenever you have changes in your code or configurations, you can re-deploy them again using the same [deploy](https://github.com/coldbrewcloud/coldbrew-cli/wiki/CLI-Command:-deploy) command. In this example, I made a simple change in `.units` attributes in the configuration file: from `1` tom `2`.
+After the first deploy, whenever you have changes in your code or configurations, you can re-deploy them again using the same [deploy](https://github.com/coldbrewcloud/coldbrew-cli/wiki/CLI-Command:-deploy) command. In this example, I made a simple change in `.cpu` attributes in the configuration file: from `0.1` tom `0.2`.
 
 ```bash
 coldbrew deploy
 ```
 
-<img src="https://raw.githubusercontent.com/coldbrewcloud/assets/master/coldbrew-cli/tutorial-echo-slack-bot-deplpy-2.gif?v=1" width="800">
+<img src="https://raw.githubusercontent.com/coldbrewcloud/assets/master/coldbrew-cli/tutorial-echo-slack-bot-deploy-2.gif?v=1" width="800">
 
 You will notice that **coldbrew-cli** did not create a new AWS resources this time because they were already created during the first deploy run. **coldbrew-cli** always tries to minimize the actual AWS changes by analyzing and comparing the current status and the desired status.
 
