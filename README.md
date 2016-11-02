@@ -29,7 +29,7 @@ You will need a Slack bot account for this tutorial. You can [create a Slack bot
 
 This tutorial project contains the bare minimum _(but fully functional)_ sample resources so you can get started right away.
 
-- A sample Slack bot: the bot simply echos what the calling user said
+- A sample Slack bot (written in Go): the bot simply echos what the calling user said
 - A sample [Dockerfile](https://github.com/coldbrewcloud/tutorial-echo-slack-bot/blob/master/Dockerfile)
 - A sample **coldbrew-cli** app configuration file, [coldbrew.conf](https://github.com/coldbrewcloud/tutorial-echo-slack-bot/blob/master/coldbrew.conf)
 
