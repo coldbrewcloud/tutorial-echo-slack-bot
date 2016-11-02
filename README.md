@@ -78,27 +78,18 @@ env:
 
 with your actual API token.
 
-Before we start deploying, we need to compile and build the bot application binary for the target Docker image:
-
-```bash
-GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o bot
-```
-
-Or, you can simply run `make build`.
-
-Now, to deploy your application, you use [deploy](https://github.com/coldbrewcloud/coldbrew-cli/wiki/CLI-Command:-deploy) command:
+Now you can deploy your bot using [deploy](https://github.com/coldbrewcloud/coldbrew-cli/wiki/CLI-Command:-deploy) command:
 
 ```bash
 coldbrew deploy
 ```
 
-<img src="https://raw.githubusercontent.com/coldbrewcloud/assets/master/coldbrew-cli/tutorial-echo-slack-bot-deploy.gif?v=1" width="800">
+<img src="https://raw.githubusercontent.com/coldbrewcloud/assets/master/coldbrew-cli/tutorial-echo-slack-bot-deploy.gif?v=2" width="800">
 
 You just ran a single command line, but, what's realy happening here is:
 - **coldbrew-cli** builds local Docker image using [Dockerfile](https://github.com/coldbrewcloud/tutorial-echo-slack-bot/blob/master/Dockerfile). _(You can skip this if you provide the local image name using `--docker-image` flag directly.)_
 - It pushes the Docker image to ECR Repository that's created for your application.
 - It creates, updates, or, configures ECS Task Definition and ECS Service to apply your configurations.
-- It also creates or configures an ELB Application Load Balanacer if your application needs a load balancer. _(This tutorial enables the load balancer.)_
 
 Now let's check the application status using [status](https://github.com/coldbrewcloud/coldbrew-cli/wiki/CLI-Command:-status) command:
 
