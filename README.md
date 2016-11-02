@@ -127,24 +127,9 @@ coldbrew status
 
 ## Testing the Application
 
-To know if your application is up and running, check [status](https://github.com/coldbrewcloud/coldbrew-cli/wiki/CLI-Command:-status) command output:
-- Make sure ELB Load Balancer's Status becomes `active`.
-- Make sure you have more than 1 ECS Task has running status (`RUNNING/RUNNING`).
+Once your bot application is up and running, you will see the bot user become online on Slack channels. You can test the bot by mentioning him and saying something.
 
-Assuming it's all good, let's test if your Node.JS application really works. Again check [status](https://github.com/coldbrewcloud/coldbrew-cli/wiki/CLI-Command:-status) command output to find the Load Balancer endpoint _(`http://tutorial-echo-slack-bot-elb-37144599.us-west-2.elb.amazonaws.com:80` in my example run)_. Then run this:
-
-```bash
-$ curl -i http://tutorial-echo-slack-bot-elb-37144599.us-west-2.elb.amazonaws.com:80
-HTTP/1.1 200 OK
-Date: Tue, 01 Nov 2016 19:43:58 GMT
-Content-Type: text/plain
-Content-Length: 13
-Connection: keep-alive
-
-Hello, World
-```
-
-It looks like it really works as we expect.
+<img src="https://raw.githubusercontent.com/coldbrewcloud/assets/master/coldbrew-cli/tutorial-echo-slack-bot-screen1.png?v=2">
 
 ## Cleaning Up
 
@@ -170,6 +155,10 @@ _*For the same reason, cluster delete can take long to finish._
 
 ---
 
-That's it for the tutorial. Now you know how to run your Node.JS applications on AWS using [coldbrew-cli](https://github.com/coldbrewcloud/coldbrew-cli). Although this tutorial used a sample Node.JS application, but, deployment workflow of **coldbrew-cli** for other tech stacks is almost the same, as long as you have your Dockerfile in place.
+That's it for the tutorial. 
 
-See [Documentations](https://github.com/coldbrewcloud/coldbrew-cli/wiki) for more details.
+See [Documentations](https://github.com/coldbrewcloud/coldbrew-cli/wiki) for more details on **coldbrew-cli**, or, check out other tutorials:
+
+- [Running a scalable WordPress website on AWS](https://github.com/coldbrewcloud/tutorial-wordpress)
+- [Running a Go application on AWS](https://github.com/coldbrewcloud/tutorial-echo)
+- [Running a Node.JS application on AWS](https://github.com/coldbrewcloud/tutorial-nodejs)
