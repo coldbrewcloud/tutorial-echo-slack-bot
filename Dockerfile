@@ -1,9 +1,8 @@
-FROM alpine:3.4
+FROM golang:1.7.3
 
-RUN apk --update add ca-certificates
+COPY . /go/src/github.com/coldbrewcloud/tutorial-echo-slack-bot
+RUN cd /go/src/github.com/coldbrewcloud/tutorial-echo-slack-bot && \
+    GOPATH=/go go get -d -v && \
+    GOPATH=/go go install -v
 
-COPY bot /
-
-EXPOSE 8888
-
-CMD ["/bot"]
+CMD ["/go/bin/tutorial-echo-slack-bot"]
