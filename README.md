@@ -21,12 +21,16 @@ As you will be deploying your application on AWS, you will need AWS account for 
 - `$AWS_REGION`: AWS region name
 - `$AWS_VPC`: AWS VPC ID _(this is completely optional. If you don't specify or don't know your VPC ID, **coldbrew-cli** will automatically use the [default VPC](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/default-vpc.html) of your AWS account.)_
 
+### Slack Bot Account
+
+You will need a Slack bot account for this tutorial. You can [create a Slack bot account](https://my.slack.com/services/new/bot) if you don't have one. Just save he API token of the bot account because that will be used later in this tutorial.
+
 ### Clone This Repo
 
 This tutorial project contains the bare minimum _(but fully functional)_ sample resources so you can get started right away.
 
 - A sample Slack bot: the bot simply echos what the calling user said
-- A sample [Dockerfile](https://github.com/coldbrewcloud/tutorial-echo-slack-bot/blob/master/Dockerfile) _(based on [Dockerizing a Node.js web app](https://echo-slack-bot.org/en/docs/guides/echo-slack-bot-docker-webapp/) article)_
+- A sample [Dockerfile](https://github.com/coldbrewcloud/tutorial-echo-slack-bot/blob/master/Dockerfile)
 - A sample **coldbrew-cli** app configuration file, [coldbrew.conf](https://github.com/coldbrewcloud/tutorial-echo-slack-bot/blob/master/coldbrew.conf)
 
 Clone this repo:
@@ -46,12 +50,12 @@ Let's create your first cluster `tutorial` using [cluster-create](https://github
 coldbrew cluster-create tutorial --disable-keypair
 ```
 
-<img src="https://raw.githubusercontent.com/coldbrewcloud/assets/master/coldbrew-cli/tutorial-echo-slack-bot-cluster-create.gif?v=1" width="800">
+<img src="https://raw.githubusercontent.com/coldbrewcloud/assets/master/coldbrew-cli/tutorial-echo-slack-bot-cluster-create.gif?v=2" width="800">
 
 _*In this tutorial, we used `--disable-keypair` flag to skip assigning EC2 key pairs to the container instances. If you will need a direct access to the instances (e.g. via SSH), you can use `--key` flag to specify your key pair name._
 
 
-If you want to check the current running status of your first cluster, you can use [cluster-status]((https://github.com/coldbrewcloud/coldbrew-cli/wiki/CLI-Command:-cluster-status) command:
+If you want to check the current running status of your first cluster, you can use [cluster-status](https://github.com/coldbrewcloud/coldbrew-cli/wiki/CLI-Command:-cluster-status) command:
 
 ```bash
 coldbrew cluster-status tutorial
@@ -63,9 +67,26 @@ It can take several minutes until the initial ECS Container Instances (EC2 Insta
 
 ## Deploying Your Application
 
-Now it's time to deploy your app for the first time. All you need is an application [configuration file](https://github.com/coldbrewcloud/coldbrew-cli/wiki/Configuration-File) to define your app's deployment settings. You can easily create it on your own, or, you can use [init](https://github.com/coldbrewcloud/coldbrew-cli/wiki/CLI-Command:-init) command to generate a proper default configuration for your app. In this tutorial, we provide a sample [coldbrew.conf](https://github.com/coldbrewcloud/tutorial-echo-slack-bot/blob/master/coldbrew.conf) file so we can start quickly.
+Now it's time to deploy your app for the first time. To deploy the applicaiton, you need a [configuration file](https://github.com/coldbrewcloud/coldbrew-cli/wiki/Configuration-File) to define your app's deployment settings. You can easily create it on your own, or, you can use [init](https://github.com/coldbrewcloud/coldbrew-cli/wiki/CLI-Command:-init) command to generate a proper default configuration for your app. In this tutorial, we provide a sample [coldbrew.conf](https://github.com/coldbrewcloud/tutorial-echo-slack-bot/blob/master/coldbrew.conf) file.
 
-To deploy your application, you use [deploy](https://github.com/coldbrewcloud/coldbrew-cli/wiki/CLI-Command:-deploy) command:
+The sample Bot application takes the Slack API token via an environment variable `$SLACK_API_TOKEN`. So you can set and pass the variable using `.env` attributes in [coldbrew.conf](https://github.com/coldbrewcloud/tutorial-echo-slack-bot/blob/master/coldbrew.conf) file. Just replace
+
+```yaml
+env:
+  SLACK_API_TOKEN: your_slack_api_token
+```
+
+with your actual API token.
+
+Before we start deploying, we need to compile and build the bot application binary for the target Docker image:
+
+```bash
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o bot
+```
+
+Or, you can simply run `make build`.
+
+Now, to deploy your application, you use [deploy](https://github.com/coldbrewcloud/coldbrew-cli/wiki/CLI-Command:-deploy) command:
 
 ```bash
 coldbrew deploy
